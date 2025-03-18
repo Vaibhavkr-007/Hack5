@@ -45,7 +45,7 @@ export default function Home() {
             href="#testimonials"
             className="text-sm font-medium hover:text-blue-600"
           >
-            Testimonials
+            Testimonial
           </Link>
           <Link
             href="#pricing"
