@@ -455,3 +455,28 @@ export function getNewsById(id: string): News | undefined {
   return newsData.find((news) => news.id === id)
 }
 
+
+
+
+// import '@/lib/db'
+// import Newss from "@/lib/schema/News"; 
+
+// export async function getNews() {
+//   try {
+//     const news = await Newss.find({}, "_id title summary publishedAt imageUrl url categories");
+//     return news;
+//   } catch (error) {
+//     console.error("Error fetching news:", error);
+//     return [];                                                                                                                                                                              
+//   }                                                                                                              
+// }                                                                   
+
+// export async function getNewsById(id: string) {
+//   try {
+//     const news = await Newss.findById(id);
+//     return news;
+//   } catch (error) {
+//     console.error("Error fetching news by ID:", error);
+//     return null;
+//   }
+// }
