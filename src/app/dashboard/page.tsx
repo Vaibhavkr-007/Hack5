@@ -720,17 +720,6 @@ export default function Dashboard() {
                 </div>
               </>
             )}
-
-            {/* News Page */}
-            {activeTab === "news" && (
-              <div className="bg-white rounded-lg p-6 shadow">
-                <h1 className="text-2xl font-bold mb-6">News Summarization</h1>
-                <p className="text-gray-600 mb-8">
-                  Summarize the latest news articles and stay updated with the most important information.
-                </p>
-
-              </div>
-            )}
           </div>
         </main>
       </div>

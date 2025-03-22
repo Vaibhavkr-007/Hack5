@@ -1,3 +1,4 @@
+// 'use server' //remove when using /api/news
 import mongoose from "mongoose";
 
 const MONGO_URI: string | undefined = process.env.DB;

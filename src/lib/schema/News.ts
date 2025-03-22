@@ -1,19 +1,20 @@
+'use server'
 import mongoose, { Schema, Document } from "mongoose";
 
 interface INews extends Document {
     title: string;
     description: string;
-    source: string;
+    source: string;                                                                                                                                                                                     
     author: string;
     url: string;
     imageUrl: string;
-    publishedAt: Date;
-    content: string;
-    summary: String;
+    publishedAt: Date;                                                                                          
+    content: string;                                                            
+    summary: String;                                                                                
     categories: [String];
 }
 
-const NewsSchema = new Schema<INews>({
+const newsSchema = new Schema<INews>({
     title: String,
     description: String,
     source: String,
@@ -28,6 +29,6 @@ const NewsSchema = new Schema<INews>({
 });
 
 // ✅ Prevent model overwrite
-const News = mongoose.models.News || mongoose.model<INews>("News", NewsSchema);
+const NewsSchema = mongoose.models.News || mongoose.model<INews>("News", newsSchema);
 
-export default News;
+export default NewsSchema;

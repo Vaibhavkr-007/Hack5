@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { newsCategories } from "@/lib/NewsCategories"
+import { message } from "antd"
+import axios from "axios"
 
 interface CategorySelectionProps {
   onSubmit: (selectedCategories: Record<string, string[]>) => void
@@ -46,6 +48,7 @@ export default function CategorySelection({ onSubmit, isSubmitting }: CategorySe
         [categoryId]: newSelected,
       }
     })
+    console.log(selectedCategories)
   }
 
   const isSubcategorySelected = (categoryId: string, subcategoryId: string) => {
@@ -53,11 +56,39 @@ export default function CategorySelection({ onSubmit, isSubmitting }: CategorySe
   }
 
   const getCategorySelectionCount = (categoryId: string) => {
+    console.log(selectedCategories)
     return selectedCategories[categoryId]?.length || 0
   }
 
-  const handleSubmit = () => {
-    onSubmit(selectedCategories)
+  // const handleSubmit = () => {
+  //   onSubmit(selectedCategories)
+  // }
+
+  const handleSubmit = async () => {
+    try {
+      // Make API call to update news categories
+      const response = await axios.post('/api/update-news-categories', {
+        categories: selectedCategories
+      }, 
+      
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log(response.data)
+      // Call onSubmit with selected categories if successful
+      onSubmit(selectedCategories)
+    
+      message.success('Categories updated successfully!')
+    } catch (err: unknown) {
+      // Handle error with axios error handling
+      if (axios.isAxiosError(err)) {
+        message.error(err.response?.data?.message || 'Failed to update categories')
+      } else {
+        message.error('An unexpected error occurred')
+      }
+    }
   }
 
   return (
@@ -132,4 +163,10 @@ export default function CategorySelection({ onSubmit, isSubmitting }: CategorySe
     </div>
   )
 }
+
+
+
+
+
+
 

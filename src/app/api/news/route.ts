@@ -1,9 +1,10 @@
 import '@/lib/db'
 import 'dotenv/config'
 import axios from "axios";
-import News from "@/lib/schema/News";
+import NewsSchema from '@/lib/schema/News';
 
-const NEWS_API_URL = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=3b43bbce1ad94317bbbd12d5005d8d7e";
+// const NEWS_API_URL = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=3b43bbce1ad94317bbbd12d5005d8d7e";
+const NEWS_API_URL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=3b43bbce1ad94317bbbd12d5005d8d7e";
 const CATEGORY_API_URL = "https://3xcdp0crui.execute-api.eu-north-1.amazonaws.com/default";
 const SUMMARY_API_URL = "https://jxitdv3no7.execute-api.eu-north-1.amazonaws.com/default";
 const NEWS_URL_CONTENT_API = "https://9p175be8hc.execute-api.eu-north-1.amazonaws.com/default";
@@ -25,14 +26,22 @@ const fetchCategory = async (news_title_text: string): Promise<string[]> => {
     try {
         const response = await axios.post(CATEGORY_API_URL, { news_title_text });
         const responseBody = JSON.parse(response.data.body);
-        const contentText = responseBody.candidates[0]?.content?.parts[0]?.text || "";
-        const extractedData = JSON.parse(contentText.replace(/```json|```/g, ""));
-        return extractedData.categories || [];
+
+        // Check if 'candidates' exists and has elements before accessing [0]
+        if (responseBody.candidates && responseBody.candidates.length > 0) {
+            const contentText = responseBody.candidates[0]?.content?.parts[0]?.text || "";
+            const extractedData = JSON.parse(contentText.replace(/```json|```/g, ""));
+            return extractedData.categories || [];
+        } else {
+            console.warn("No candidates found in the response.");
+            return [];
+        }
     } catch (error) {
         console.error("Error fetching category:", error);
         return [];
     }
 };
+
 
 const fetchSummary = async (news_text: string): Promise<{ headline: string; summary: string }> => {
     try {
@@ -81,7 +90,7 @@ const fetchAndSaveNews = async (): Promise<void> => {
             };
 
             // Save to DB if not already exists
-            await News.findOneAndUpdate(
+            await NewsSchema.findOneAndUpdate(
                 { url: newsData.url },
                 newsData,
                 { upsert: true, new: true }

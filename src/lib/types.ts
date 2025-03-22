@@ -1,13 +1,13 @@
 export interface News {
-    id: string
-    title: string
-    excerpt: string
-    content: string
-    summary: string
-    image: string
-    tag: string
-    date: string
-    bookmarked?: boolean
-  }
-  
-  
+  _id: string;
+  title: string;
+  description: string;
+  source: string;
+  author: string;
+  url: string;
+  imageUrl: string;
+  publishedAt: Date;
+  content: string;
+  summary: String;
+  categories: [String];
+}
