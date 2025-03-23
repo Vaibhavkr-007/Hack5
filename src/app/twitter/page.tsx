@@ -56,9 +56,9 @@ export default function TwitterPage() {
     <div className="w-screen h-screen flex items-center justify-center p-4 bg-gray-100">
       <Card className="w-full max-w-2xl shadow-lg p-6">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Twitter Integration</CardTitle>
+          <CardTitle className="text-center text-2xl">Twitter</CardTitle>
           <CardDescription className="text-center">
-            Search for a Twitter account and validate its existence.
+            Search for a Twitter accoount.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center w-full">
