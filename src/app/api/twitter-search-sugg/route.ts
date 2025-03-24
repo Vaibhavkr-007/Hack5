@@ -18,6 +18,7 @@ export async function GET(request: Request) {
   try {
     // Construct the Twitter API endpoint for searching users
     const twitterApiUrl = `https://api.twitter.com/2/users/by?usernames=${query}`;
+    
 
     // Make the request to the Twitter API with Bearer Token for authentication
     const response = await axios.get(twitterApiUrl, {
