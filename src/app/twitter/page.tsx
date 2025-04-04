@@ -33,41 +33,60 @@
 
 
 
+'use client'
 
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const TwitterSearch = () => {
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!query.trim()) return; // Skip if query is empty or just spaces
 
-"use client";
+      setLoading(true);
+      setError('');
+      try {
+        const response = await axios.get(`/api/twitter-search-sugg?query=${query}`);
+        setSuggestions(response.data.data || []); // Assuming response contains an array of users in 'data'
+      } catch (err) {
+        setError('Error fetching suggestions');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-import TopNavigation from "@/components/news/top-navigation";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
-import TwitterSearch from "@/components/twitter/account-search-add";
+    const timer = setTimeout(() => fetchSuggestions(), 500); // Debounce delay (500ms)
 
-export default function TwitterPage() {
+    return () => clearTimeout(timer);
+  }, [query]);
+
   return (
-    <div className="w-screen h-screen flex items-center justify-center p-4 bg-gray-100">
-      <Card className="w-full max-w-2xl shadow-lg p-6">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">Twitter</CardTitle>
-          <CardDescription className="text-center">
-            Search for a Twitter accoount.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col items-center w-full">
-          <TwitterSearch />
-          <Button asChild className="w-full mt-6">
-            <Link href="/dashboard">Go to dashboard</Link>
-          </Button>
-        </CardContent>
-      </Card>
+    <div>
+      <input
+        type="text"
+        placeholder="Search for Twitter accounts"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="input"
+      />
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      <ul>
+        {suggestions.map((user: any) => (
+          <li key={user.id}>
+            <a href={`https://twitter.com/${user.username}`} target="_blank" rel="noopener noreferrer">
+              {user.username}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
+
+export default TwitterSearch;
