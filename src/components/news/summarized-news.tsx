@@ -4,10 +4,77 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { useNewsStore } from "@/lib/store"
+import { useState } from "react"
 
 export default function SummarizedNews() {
   const router = useRouter()
   const { selectedNews } = useNewsStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const [audioUrl, setAudioUrl] = useState<string | null>(null)
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
+  const [isPlaying, setIsPlaying] = useState(false) // Track if audio is playing
+
+  const handleListen = async () => {
+    if (!selectedNews?.summary) return
+
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/text-to-speech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: selectedNews.summary }),
+      })
+
+      const data = await response.json()
+
+      // Ensure the response has the audio file path
+      if (data?.audio_file_path) {
+        const audioPath = data.audio_file_path
+
+        // Construct the full URL to access the audio file
+        const audioUrl = `http://127.0.0.1:5000${audioPath}`
+
+        // Set the audio URL state
+        setAudioUrl(audioUrl)
+
+        // Create a new Audio object and play the file
+        const newAudio = new Audio(audioUrl)
+        setAudio(newAudio)
+
+        // Event listener for errors
+        newAudio.onerror = () => {
+          console.error('Error loading audio file:', audioUrl)
+          alert('Error loading the audio. Please try again later.')
+        }
+
+        // Play the audio
+        newAudio.play()
+
+        // Set audio playing state to true
+        setIsPlaying(true)
+      } else {
+        console.error('Failed to get audio file path:', data)
+        alert('Failed to retrieve audio for the summary.')
+      }
+    } catch (error) {
+      console.error('Error during text-to-speech request:', error)
+      alert('An error occurred while generating the audio. Please try again later.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleStop = () => {
+    if (audio) {
+      audio.pause()  // Pause the audio
+      audio.currentTime = 0  // Reset the playback to the start
+      setAudio(null)  // Clear the audio reference
+      setIsPlaying(false)  // Update the playing state
+    }
+  }
 
   if (!selectedNews) {
     return (
@@ -42,6 +109,26 @@ export default function SummarizedNews() {
         {/* Summary */}
         <div className="text-sm text-gray-700">
           <p className="mb-4">{selectedNews.summary}</p>
+        </div>
+
+        {/* Listen and Stop Buttons */}
+        <div className="flex gap-4">
+          <Button 
+            onClick={handleListen}
+            className={`w-full mt-4 ${isPlaying ? 'w-1/2' : ''}`} 
+            disabled={isLoading || isPlaying} // Disable if already playing
+          >
+            {isLoading ? 'Loading...' : 'Listen'}
+          </Button>
+
+          {isPlaying && (
+            <Button 
+              onClick={handleStop}
+              className="w-1/2 mt-4"
+            >
+              Stop
+            </Button>
+          )}
         </div>
       </CardContent>
 

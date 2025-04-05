@@ -6,305 +6,201 @@ import {
   Twitter,
   ChevronRight,
 } from "lucide-react";
-import Image from "next/image";
+
 import Link from "next/link";
-import TestimonialCarousel from "@/components/landingpage/testimonial";
-import FeatureCard from "@/components/landingpage/featured-card";
-import HowItWorksStep from "@/components/landingpage/how-it-works";
-import img1 from "@/../public/images/remote.png";
-import img2 from "@/../public/images/before.jpg";
-import img3 from "@/../public/images/after.jpg";
-import newsImage from "@/../public/images/news.jpg";
-import twitterImage from "@/../public/images/twitter-720970_1280.png";
-import emailImage from "@/../public/images/email.png";
+import { SpotlightHeading } from "@/components/ui/spotlightheading";
+import { VortexSection } from "@/components/ui/vortexsection";
+import { FeatureCard } from "@/components/landingpage/featured-card";
+import HowItWorksSection from "@/components/ui/worksection";
+import { TextShimmer } from "../../components/motion-primitives/text-shimmer";
+import Testimonials from "@/components/landingpage/testimonial";
+import { RainbowButton } from "@/components/ui/rainbowbutton";
+import { ShinyButton } from "@/components/magicui/shiny-button";
+import { RippleButton } from "@/components/magicui/ripple-button";
 
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-gradient-to-bl from-black via-gray-950 to-black">
       <header className="container mx-auto py-4 px-4 md:px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-blue-600"></div>
-          <span className="text-xl font-bold">SimplifyAI</span>
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-gray-200 to-gray-400 transition-transform group-hover:scale-105" />
+          <span className="text-xl font-bold text-gray-100 transition-colors group-hover:text-gray-300">
+            SimplifyAI
+          </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="#features"
-            className="text-sm font-medium hover:text-blue-600"
-          >
-            Features
-          </Link>
-          <Link
-            href="#how-it-works"
-            className="text-sm font-medium hover:text-blue-600"
-          >
-            How It Works
-          </Link>
-          <Link
-            href="#testimonials"
-            className="text-sm font-medium hover:text-blue-600"
-          >
-            Testimonial
-          </Link>
-          <Link
-            href="#pricing"
-            className="text-sm font-medium hover:text-blue-600"
-          >
-            Pricing
-          </Link>
+        <nav className="hidden md:flex items-center gap-8">
+          {["Features", "How It Works", "Testimonial", "Pricing"].map(
+            (item) => (
+              <Link
+                key={item}
+                href={`#${item.toLowerCase().replace(" ", "-")}`}
+                className="text-sm font-medium text-gray-400 hover:text-gray-100 transition-all 
+                         hover:scale-105 hover:font-semibold"
+              >
+                {item}
+              </Link>
+            )
+          )}
         </nav>
-
 
         <div className="flex items-center gap-4">
           <Link href="/login">
-            <Button variant="outline" className="hidden md:flex">
+            <RippleButton
+              rippleColor="#00008B"
+              className="hidden mt-5 md:flex transition-all"
+            >
+              {" "}
               Log in
-            </Button>
+            </RippleButton>
+            ;
           </Link>
           <Link href="/signup">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-              Get Started
-            </Button>
+            <ShinyButton>Get Started</ShinyButton>
           </Link>
         </div>
-
       </header>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-950">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-blue-700">
-                  Simplify Your Life with SimplifyAI
-                </h1>
-                <p className="text-xl text-gray-500 dark:text-gray-400 max-w-[600px]">
-                  Your AI-powered assistant for emails, news, and social media.
-                  Stay organized, informed, and stress-free.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href='/signup'>
-                    <Button
-                      size="lg"
-                      className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
-                    >
-                      Get Started for Free <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
-                  >
-                    Learn More
-                  </Button>
-                </div>
-              </div>
-              <div className="relative w-full h-[400px] md:h-[500px] rounded-lg shadow-xl overflow-hidden">
-                <Image
-                  src={img1}
-                  alt="SimplifyAI Dashboard"
-                  fill
-                  className="object-cover w-full h-full"
-                  priority
-                />
-              </div>
-            </div>
+        <section className="relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-gray-800">
+          <div>
+            <SpotlightHeading />
           </div>
         </section>
 
         {/* Introduction Section */}
-        <section className="py-20 bg-white dark:bg-gray-950">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-700">
-                Your Life, Simplified
-              </h2>
-              <p className="text-lg text-gray-500 dark:text-gray-400 max-w-[800px] mx-auto">
-                In a world overflowing with information, SimplifyAI is here to
-                help you cut through the noise. From managing your inbox to
-                staying updated on global news and social media, our AI-powered
-                tools are designed to save you time and energy. Focus on what
-                matters most – we'll handle the rest.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="relative h-[300px] md:h-[400px] rounded-lg shadow-lg overflow-hidden">
-                <Image
-                  src={img2}
-                  alt="Cluttered inbox"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">
-                    Before SimplifyAI
-                  </span>
-                </div>
-              </div>
-              <div className="relative h-[300px] md:h-[400px] rounded-lg shadow-lg overflow-hidden">
-                <Image
-                  src={img3}
-                  alt="Organized inbox"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-blue-600/20 flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">
-                    After SimplifyAI
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <section className="backdrop-blur-sm">
+          <VortexSection />
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900">
+        <section id="features" className="py-20 backdrop-blur-sm">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-700">
-                How We Make Your Life Easier
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-100">
+                How We Make Your Life{" "}
+                <span className="text-gray-400">Easier</span>
               </h2>
-              <p className="text-lg text-gray-500 dark:text-gray-400 max-w-[600px] mx-auto">
+              <p className="text-lg text-gray-400 max-w-[600px] mx-auto">
                 Our AI-powered tools are designed to simplify your digital life
                 across multiple platforms.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-40">
               <FeatureCard
-                icon={<Mail className="h-10 w-10 text-blue-600" />}
+                icon={<Mail className="h-10 w-10 text-gray-900" />}
                 title="Emails, Sorted."
                 description="Summarize emails, generate AI replies, sort by urgency, and extract important dates to your calendar – all in one place."
-                imageSrc=""
+                imgsrc="/images/Mail Mondays GIF by ailadi.gif"
               />
               <FeatureCard
-                icon={<Newspaper className="h-10 w-10 text-blue-600" />}
+                icon={<Newspaper className="h-10 w-10 text-gray-900" />}
                 title="News, Tailored for You."
                 description="Get concise news summaries based on your interests, with an AI chatbot to dive deeper and suggest related videos."
-                imageSrc="/placeholder.svg?height=200&width=300"
+                imgsrc="/images/download.gif"
               />
               <FeatureCard
-                icon={<Twitter className="h-10 w-10 text-blue-600" />}
+                icon={<Twitter className="h-10 w-10 text-gray-900" />}
                 title="Twitter, Without the Noise."
                 description="Stay updated with summarized content from your feed and trending topics, curated just for you."
-                imageSrc="/placeholder.svg?height=200&width=300"
+                imgsrc="/images/Twitter X GIF by systaime.gif"
               />
             </div>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 bg-white dark:bg-gray-950">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-700">
-                Simple, Smart, and Seamless
-              </h2>
-              <p className="text-lg text-gray-500 dark:text-gray-400 max-w-[600px] mx-auto">
-                Getting started with SimplifyAI is easy. Just follow these
-                simple steps.
-              </p>
-            </div>
-            <div className="max-w-4xl mx-auto">
-              <div className="relative">
-                <div className="absolute left-[22px] top-0 h-full w-0.5 bg-gray-200 dark:bg-gray-800"></div>
-                <div className="space-y-12">
-                  <HowItWorksStep
-                    number={1}
-                    title="Connect Your Accounts"
-                    description="Link your email, news preferences, and Twitter."
-                  />
-                  <HowItWorksStep
-                    number={2}
-                    title="Let AI Do the Work"
-                    description="Our system analyzes, summarizes, and organizes everything for you."
-                  />
-                  <HowItWorksStep
-                    number={3}
-                    title="Enjoy a Simpler Life"
-                    description="Spend less time managing chaos and more time living your life."
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        <HowItWorksSection />
         {/* Testimonials Section */}
-        <section
-          id="testimonials"
-          className="py-20 bg-gray-50 dark:bg-gray-900"
-        >
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-700">
-                What People Are Saying
+        <section id="testimonials" className="py-20  backdrop-blur-sm">
+          <div className="container mx-auto px-4 md:px-6 w-full">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-100">
+                <TextShimmer
+                  duration={2.8}
+                  className="font-mono text-5xl pb-2 "
+                >
+                  What People Are Saying
+                </TextShimmer>
               </h2>
-              <p className="text-lg text-gray-500 dark:text-gray-400 max-w-[600px] mx-auto">
+              <p className="text-lg text-gray-400 max-w-[600px] mx-auto">
                 Don't just take our word for it. Here's what our users have to
                 say.
               </p>
             </div>
-            <TestimonialCarousel />
+            <Testimonials />
           </div>
         </section>
+        <div className="flex flex-col w-screen "></div>
 
         {/* CTA Section */}
-        <section className="py-20 bg-blue-600 text-white">
+        <section className="py-20 ">
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Simplify Your Life?
-            </h2>
-            <p className="text-xl mb-8 max-w-[600px] mx-auto">
-              Join thousands of users who are already saving time and staying
-              organized with SimplifyAI.
-            </p>
-            <Button
-              size="lg"
-              variant="secondary"
-              className="bg-white text-blue-600 hover:bg-blue-50 gap-2"
-            >
-              Get Started for Free <ArrowRight className="h-4 w-4" />
-            </Button>
+            <div className="max-w-3xl mx-auto bg-gray-900/50 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-100">
+                Ready to Simplify Your Life?
+              </h2>
+              <p className="text-xl mb-8 text-gray-400">
+                Join thousands of users who are already saving time and staying
+                organized with SimplifyAI.
+              </p>
+              <Button
+                size="lg"
+                className="bg-gradient-to-br from-gray-100 to-gray-300 text-gray-900 hover:from-gray-200 
+                          hover:to-gray-400 gap-2 shadow-lg hover:shadow-xl transition-transform hover:scale-105"
+              >
+                Get Started for Free <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="bg-gray-100 dark:bg-gray-900 py-12">
+      {/* <footer className=" backdrop-blur-sm py-12 border-t border-gray-800">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="h-8 w-8 rounded-full bg-blue-600"></div>
-                <span className="text-xl font-bold">SimplifyAI</span>
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-gray-200 to-gray-400" />
+                <span className="text-xl font-bold text-gray-100">
+                  SimplifyAI
+                </span>
               </div>
-              <p className="text-gray-500 dark:text-gray-400 mb-4">
+              <p className="text-gray-400 mb-4">
                 Your AI-powered assistant for a simpler digital life.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="text-gray-500 hover:text-blue-600">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-gray-100 transition-colors"
+                >
                   <Twitter className="h-5 w-5" />
                 </a>
-                <a href="#" className="text-gray-500 hover:text-blue-600">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-gray-100 transition-colors"
+                >
                   <Mail className="h-5 w-5" />
                 </a>
               </div>
             </div>
             <div>
-              <h3 className="font-bold mb-4">Quick Links</h3>
+              <h3 className="font-bold mb-4 text-gray-100">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-500 hover:text-blue-600">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
+                  >
                     About
                   </a>
                 </li>
                 <li>
                   <a
                     href="#features"
-                    className="text-gray-500 hover:text-blue-600"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
                   >
                     Features
                   </a>
@@ -312,62 +208,161 @@ export default function Home() {
                 <li>
                   <a
                     href="#pricing"
-                    className="text-gray-500 hover:text-blue-600"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
                   >
                     Pricing
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-500 hover:text-blue-600">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
+                  >
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-500 hover:text-blue-600">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
+                  >
                     Contact
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">Legal</h3>
+              <h3 className="font-bold mb-4 text-gray-100">Legal</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-500 hover:text-blue-600">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
+                  >
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-500 hover:text-blue-600">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
+                  >
                     Terms of Service
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-500 hover:text-blue-600">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-colors"
+                  >
                     Cookie Policy
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">Subscribe</h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-4">
+              <h3 className="font-bold mb-4 text-gray-100">Subscribe</h3>
+              <p className="text-gray-400 mb-4">
                 Stay updated with our latest features and news.
               </p>
               <div className="flex">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="px-4 py-2 rounded-l-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="px-4 py-2 rounded-l-md border border-gray-700 bg-gray-800/50 text-gray-100 
+                            focus:outline-none focus:ring-2 focus:ring-gray-600 backdrop-blur-sm w-full"
                 />
-                <Button className="rounded-l-none bg-blue-600 hover:bg-blue-700 text-white">
+                <Button className="rounded-l-none bg-gray-700 hover:bg-gray-600 text-gray-100 transition-all">
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>
           </div>
-          <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 text-center text-gray-500">
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
             <p>© {new Date().getFullYear()} SimplifyAI. All rights reserved.</p>
+          </div>
+        </div>
+      </footer> */}
+      <footer className="bg-gray-950/80 backdrop-blur-lg py-12 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            {/* Brand Section */}
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-gray-200 to-gray-400" />
+                <span className="text-xl font-semibold text-gray-100">
+                  SimplifyAI
+                </span>
+              </div>
+              <p className="text-gray-400 text-sm mb-6">
+                Transforming complexity into simplicity through AI
+              </p>
+              <div className="flex gap-4">
+                {[Twitter, Mail].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="text-gray-400 hover:text-gray-100 transition-all duration-300"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Links Sections */}
+            {["Quick Links", "Legal"].map((title, idx) => (
+              <div key={title}>
+                <h3 className="font-semibold text-gray-100 mb-4">{title}</h3>
+                <ul className="space-y-3">
+                  {[
+                    idx === 0
+                      ? ["About", "Features", "Pricing", "Blog", "Contact"]
+                      : ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+                  ].map((items) =>
+                    items.map((item) => (
+                      <li key={item}>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-gray-100 text-sm transition-colors"
+                        >
+                          {item}
+                        </a>
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </div>
+            ))}
+
+            {/* Newsletter */}
+            <div>
+              <h3 className="font-semibold text-gray-100 mb-4">Stay Updated</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Get product updates and AI insights
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-gray-800 bg-gray-900/50 
+                     focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-100 placeholder-gray-500"
+                />
+                <Button
+                  size="sm"
+                  className="shrink-0 bg-gray-800 hover:bg-gray-700 text-gray-100 px-4"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="pt-8 border-t border-gray-800">
+            <p className="text-center text-sm text-gray-500">
+              © {new Date().getFullYear()} SimplifyAI. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
