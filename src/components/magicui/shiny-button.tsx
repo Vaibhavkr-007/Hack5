@@ -33,7 +33,7 @@ export const ShinyButton = React.forwardRef<HTMLButtonElement, ShinyButtonProps>
         }}
         {...(props as React.ComponentPropsWithoutRef<typeof motion.button>)}
       >
-        {/* Shine layer */}
+     
         <motion.div
           initial={{ x: '-100%' }}
           animate={{ x: '100%' }}
@@ -52,7 +52,7 @@ export const ShinyButton = React.forwardRef<HTMLButtonElement, ShinyButtonProps>
           }}
         />
 
-        {/* Content */}
+       
         <div style={{
           position: 'relative',
           zIndex: 1,
@@ -65,7 +65,7 @@ export const ShinyButton = React.forwardRef<HTMLButtonElement, ShinyButtonProps>
           {children}
         </div>
 
-        {/* Border glow */}
+      
         <div style={{
           position: 'absolute',
           inset: 0,
