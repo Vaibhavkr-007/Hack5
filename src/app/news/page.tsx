@@ -15,17 +15,17 @@ export default function News() {
   useEffect(() => {
     const checkUserCategories = async () => {
       try {
-        // Fetch user data with JWT authentication
+
         const response = await axios.get("/api/user-jwt-auth", { withCredentials: true });
 
         if (response.data.success && response.data.categories?.length > 0) {
-          // If categories exist, go to NewsPage
+       
           setShowCategorySelection(false);
         }
       } catch (error) {
         console.error("Error fetching user categories:", error);
         
-        // Handle unauthorized users (e.g., redirect to login)
+    
         router.push("/login");
       } finally {
         setLoading(false);
